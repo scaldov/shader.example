@@ -1,0 +1,13 @@
+uniform float time;
+uniform mat4 mv;
+in vec3 vertex_color;
+in vec3 vertex_pos;
+varying vec3 v_normal;
+            void main() {
+              //gl_FragColor = vec4(sin(vertex_pos.x*5.0), cos(vertex_pos.y*5.0), cos(vertex_pos.z*7.0)) * vertex_color;
+              vec3 ldir = vec3(0.0, 0.0, 1.0);
+              float lc = dot(ldir, v_normal);
+              gl_FragColor = vec4(cos(vertex_pos.x*17.0 + time) * cos(vertex_pos.y*17.0 + time) * cos(vertex_pos.z*17.0 + time) * vertex_color, 1);
+              //gl_FragColor = vertex_color;
+              //gl_FragColor *= lc;
+}

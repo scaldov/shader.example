@@ -1,0 +1,11 @@
+uniform mat4 mvp;
+varying vec3 vertex_color;
+varying vec3 vertex_pos;
+//in vec3 VertexPosition;
+            void main(){
+                vec4 point = gl_Vertex;
+                gl_Position = mvp * point;
+                //gl_Position = point;
+                vertex_color = gl_Color;
+                vertex_pos = gl_Position;
+            }

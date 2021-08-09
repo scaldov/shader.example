@@ -1,0 +1,33 @@
+precision highp float;
+uniform float time;
+uniform mat4 projection;
+uniform mat4 view;
+uniform mat4 model;
+uniform vec3 eyepos;
+varying vec4 vertex_color;
+varying vec4 vertex_pos;
+varying vec4 vertex_norm;
+varying vec4 ldir;
+varying float intensity;
+
+float mandelbrot( vec2 c ) {
+    vec2 z = vec2(0.0,0.0);
+    int i = 0;
+    while(i < 30 && (z.x*z.x + z.y*z.y) < 4.0) {
+        z = vec2( z.x*z.x-z.y*z.y+c.x, 2.0 * z.x*z.y + c.y );
+        i++;
+    }
+    return float(i);
+}
+
+void main() {
+    float lc = intensity;
+    //float lc = dot(normalize(ldir - vec4(eyepos, 0)), vertex_norm) + .1;
+    lc = lc * (.0 + log(mandelbrot(vec2(vertex_pos.x + sin(time*0.1), vertex_pos.y + cos(time*0.1)))));
+    gl_FragColor = vertex_color * lc;
+    //gl_FragColor = vertex_color;
+    //gl_FragColor = vec4(vec3(vertex_pos.z), 1.0);
+    //gl_FragColor = vec4(intensity, intensity, intensity, 1);
+    //gl_FragColor = vec4(vec3(1.0 - vertex_pos.z, intensity, 0), .5);
+    gl_FragColor.w = .5;
+}
